@@ -1,14 +1,17 @@
 package security;
 
 import java.net.Socket;
+
 import java.io.PrintWriter;
 import java.io.IOException;
 
 public class SecurityThread extends Thread {
   private Socket clientSocket = null;
+  private String policy = null;
 
-  public SecurityThread (Socket clientSocket){
+  public SecurityThread (Socket clientSocket, String policy){
     this.clientSocket = clientSocket;
+    this.policy = policy;
   }
 
   public void run(){
@@ -20,14 +23,8 @@ public class SecurityThread extends Thread {
       System.err.println("Could not create output stream for client");
     }
 
-    // Send our 'allow all' security policy to the flash client
-    String policy = 
-      "<cross-domain-policy>" +
-        "<allow-access-from domain=\"*\" to-ports=\"*\" />" +
-      "</cross-domain-policy>";
-
+    // Send our flash policy to the flash client
     out.println(policy);
-
     
     // Clost this client socket
     try {

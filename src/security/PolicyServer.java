@@ -2,19 +2,34 @@ package security;
 
 import java.net.ServerSocket;
 import java.net.Socket;
+
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.File;
+
+import java.util.Scanner;
 
 public class PolicyServer {
-  public static void main (String args[]) {
-    final int DEFAULT_PORT = 1234;
 
-    // Set server port
-    int port = DEFAULT_PORT;
+  public static void main (String args[]) {
+
+    // Load our arguments
+    String policy = "";
+    int port = 1234;
+
     try {
-      port = Integer.parseInt(args[0]);
+      // Load the policy XML
+      File policyFile = new File(args[0]);
+      Scanner policyScanner = new Scanner(policyFile);
+
+      while(policyScanner.hasNextLine())
+        policy += policyScanner.nextLine() + "\n";
+
+      // Save the port
+      port = Integer.parseInt(args[1]);
     } catch (Exception e){
-      port = DEFAULT_PORT;
+      printUsage();
+      System.exit(1);
     }
 
     // Start server socket
@@ -37,8 +52,12 @@ public class PolicyServer {
         System.out.println("Accept failed: " + port);
       }
 
-      SecurityThread thread = new SecurityThread(clientSocket);
+      SecurityThread thread = new SecurityThread(clientSocket, policy);
       thread.run();
     }
+  }
+
+  private static void printUsage(){
+    System.out.println("Usage: policyserver <flashpolicy.xml> <port>");
   }
 }
