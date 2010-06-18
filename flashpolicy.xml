@@ -6,7 +6,7 @@
 
    <!-- This is a master socket policy file -->
    <!-- No other socket policies on the host will be permitted -->
-   <site-control permitted-cross-domain-policies="master-only"/>
+   <site-control permitted-cross-domain-policies="all"/>
 
    <!-- Instead of setting to-ports="*", administrator's can use ranges and commas -->
    <!-- This will allow access to ports 123, 456, 457 and 458 -->
