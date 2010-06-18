@@ -27,7 +27,10 @@
   </target>
 
   <target name="run" depends="jar">
-    <java jar="${jar.dir}/${ant.project.name}.jar" fork="true" />
+    <java jar="${jar.dir}/${ant.project.name}.jar" fork="true">
+      <arg value="flashpolicy.xml" />
+      <arg value="1234" />
+    </java>
   </target>
 
   <target name="clean-build" depends="clean,jar" />
