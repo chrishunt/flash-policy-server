@@ -2,8 +2,7 @@ package security;
 
 import java.net.Socket;
 
-import java.io.PrintWriter;
-import java.io.IOException;
+import java.io.*;
 
 public class SecurityThread extends Thread {
   private Socket clientSocket = null;
