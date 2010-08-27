@@ -1,4 +1,4 @@
-<project name="PolicyServer" basedir="." default="main">
+<project name="PolicyServer" basedir="." default="jar">
 
   <property name="src.dir"     value="src" />
 

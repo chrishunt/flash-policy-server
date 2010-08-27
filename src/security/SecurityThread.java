@@ -14,23 +14,24 @@ public class SecurityThread extends Thread {
   }
 
   public void run(){
-    // Create an new output stream with auto-flush enabled
-    PrintWriter out = null;
     try {
-      out = new PrintWriter(clientSocket.getOutputStream(), true);
-    } catch (IOException e) {
-      System.err.println("Could not create output stream for client");
-    }
+      // See if this is a policy request
+      BufferedReader in = new BufferedReader(
+          new InputStreamReader(clientSocket.getInputStream()));
+      char[] request = new char[30];
+      in.read(request);
+      String requestString = new String(request).trim();
 
-    // Send our flash policy to the flash client
-    out.println(policy);
-    
-    // Clost this client socket
-    try {
-      out.close();
+      if(requestString.equals("<policy-file-request/>")){
+        // Create an new output stream writer and send the XML
+        OutputStreamWriter out = new OutputStreamWriter(clientSocket.getOutputStream());
+        out.write(policy + '\0');
+        out.flush();
+      }
+
       clientSocket.close();
     } catch (IOException e) {
-      System.err.println("Could not close client socket.");
+      System.err.println(e.toString());
     }
   }
 }
