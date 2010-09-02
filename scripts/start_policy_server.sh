@@ -1,1 +1,1 @@
-java -jar PolicyServer.jar config/flashpolicy.xml 1234
+java -jar ../bin/PolicyServer.jar ../config/flashpolicy.xml 1234
