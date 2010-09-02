@@ -1,4 +1,4 @@
-package security;
+package net.progeny.uswdss.chci.security;
 
 import java.net.ServerSocket;
 import java.net.Socket;
